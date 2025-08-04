@@ -19,7 +19,7 @@ Data-cleaning-project-04-08-2025/
         ├── manager.py              
         ├── cleaner.py           
         └── investigator.py           
-       
+```   
 ### 🔹Results
 
 Results are saved in a results folder in a CSV file that contains the relevant data, and in a JSON file that contains general data about the received file.
