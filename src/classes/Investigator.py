@@ -26,8 +26,7 @@ class Investigator:
     def average_length(self):
         
         def get_average(df:pd.DataFrame):
-            df["len"] = df["Text"].str.split()
-            print (df["len"])
+            df["len"] = df["Text"].apply(lambda x : len(str(x).split()))
             return float(df["len"].mean())
         
         
@@ -45,17 +44,60 @@ class Investigator:
     # ----------------------------------------------------------------------
 
     def common_words(self):
-        self.results["common_words"] = "finish"
+        words = []
+        for i in self.df["Text"].values:
+            words += str(i).split()
+        words = pd.Series(words).value_counts().head(10)
+        
+        self.results["common_words"] ={}
+        self.results["common_words"]["total"] = [i for i in words.keys()]
         return self
     # ----------------------------------------------------------------------
 
     def longest_3_tweets(self):
-        self.results["longest_3_tweets"] = "finish"
+
+        def get_3_longest(df:pd.DataFrame):
+            df["len"] = df["Text"].apply(lambda x : len(str(x)))
+            
+            df = df.sort_values(by="len",ascending=False).head(3)
+            
+            return df["Text"].to_list()
+
+
+        non_antisemitic = self.df[self.df["Biased"] == 0]
+       
+        antisemitic = self.df[self.df["Biased"] == 1]
+       
+
+
+        self.results["longest_3_tweets"] = {}
+        self.results["longest_3_tweets"]["non_antisemitic"] = get_3_longest(non_antisemitic)
+        self.results["longest_3_tweets"]["antisemitic"] = get_3_longest(antisemitic)
+
         return self
     # ----------------------------------------------------------------------
 
     def uppercase_words(self):
-        self.results["uppercase_words"] = "finish"
+        def is_uppercase(word:str):
+            for i in word:
+                if not i.isupper():
+                    return False
+                
+            return True
+
+        def get_uppercase(df:pd.DataFrame):
+            df["sum"] = df["Text"].apply(lambda x : len([word for word in str(x).split() if is_uppercase(word)]))
+            return int(df["sum"].sum())
+        
+        non_antisemitic = self.df[self.df["Biased"] == 0]
+       
+        antisemitic = self.df[self.df["Biased"] == 1]
+
+        self.results["uppercase_words"] = {}
+        self.results["uppercase_words"]["non_antisemitic"] = get_uppercase(non_antisemitic)
+        self.results["uppercase_words"]["antisemitic"] = get_uppercase(antisemitic)
+        self.results["uppercase_words"]["total"] = get_uppercase(self.df)
+
         return self
     # ----------------------------------------------------------------------
     
