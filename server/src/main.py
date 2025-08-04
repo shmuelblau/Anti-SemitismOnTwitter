@@ -12,7 +12,7 @@ JSON_PATH = os.getenv("JSON_PATH" ,"..//results//results.json")
 
 @app.get("/")
 def home():
-    return "הכל עובד"
+    return " עובד"
 
 @app.get("/start")
 def start():
