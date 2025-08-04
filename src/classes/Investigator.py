@@ -1,31 +1,63 @@
+import pandas as pd
 class Investigator:
 
     
-    def __init__(self , df):
+    def __init__(self , df:pd.DataFrame):
         self.results = {}
         self.df = df
        
 
+    # ----------------------------------------------------------------------
 
     def total_tweets(self):
-        self.results["total_tweets"] = "finish"
+
+        result = self.df["Biased"].value_counts()
+
+        self.results["total_tweets"] = {}
+        self.results["total_tweets"]["antisemitic"] = int(result[0])
+        self.results["total_tweets"]["non_antisemitic"] = int(result[1])
+        self.results["total_tweets"]["total"] = self.df.shape[0]
+        self.results["total_tweets"]["unspecified"] = self.df.shape[0] - int(result[0]) - int(result[1])
+
+
         return self
+    # ----------------------------------------------------------------------
 
     def average_length(self):
-        self.results["average_length"] = "finish"
+        
+        def get_average(df:pd.DataFrame):
+            df["len"] = df["Text"].str.split()
+            print (df["len"])
+            return float(df["len"].mean())
+        
+        
+        non_antisemitic = self.df[self.df["Biased"] == 0]
+       
+        antisemitic = self.df[self.df["Biased"] == 1]
+
+
+        self.results["average_length"] = {}
+        self.results["average_length"]["non_antisemitic"] = get_average(non_antisemitic)
+        self.results["average_length"]["antisemitic"] = get_average(antisemitic)
+        self.results["average_length"]["total"] = get_average(self.df)
+
         return self
+    # ----------------------------------------------------------------------
 
     def common_words(self):
         self.results["common_words"] = "finish"
         return self
+    # ----------------------------------------------------------------------
 
     def longest_3_tweets(self):
         self.results["longest_3_tweets"] = "finish"
         return self
+    # ----------------------------------------------------------------------
 
     def uppercase_words(self):
         self.results["uppercase_words"] = "finish"
         return self
+    # ----------------------------------------------------------------------
     
     def get_results(self):
         return self.results

@@ -2,8 +2,8 @@ import sys
 import os
 from classes.Manager import Manager
 
-CSV_PATH = os.getenv("CSV_PATH" ,"C://Users//user//Desktop//DATA//Projects//Anti-SemitismOnTwitter//results//cleaned_dataset_tweets.csv")
-JSON_PATH = os.getenv("JSON_PATH" ,"C://Users//user//Desktop//DATA//Projects//Anti-SemitismOnTwitter//results//results.json")
+CSV_PATH = os.getenv("CSV_PATH" ,"..//results//cleaned_dataset_tweets.csv")
+JSON_PATH = os.getenv("JSON_PATH" ,"..//results//results.json")
 
 def start():
 
