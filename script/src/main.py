@@ -13,12 +13,14 @@ def start():
     else:
         path = "..//data//tweets_dataset.csv"
 
-
+    # Checking if the path is valid
     if Manager.tryLoad == -1 :
         print ("problem in path")
         return 
     
 
+    
+    # Running the actions through the manager
     df = Manager.load(path)
     results = Manager.DataInvestigation(df)
     cleaned_dataset_tweets = Manager.DataCleaning(df) 

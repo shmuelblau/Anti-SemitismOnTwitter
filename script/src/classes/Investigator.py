@@ -1,14 +1,13 @@
 import pandas as pd
 class Investigator:
 
+    # All functions modify the gson and add information to it and return the instance itself to allow threading.
     
     def __init__(self , df:pd.DataFrame):
         self.results = {}
         self.df = df
        
-
     # ----------------------------------------------------------------------
-
     def total_tweets(self):
 
         result = self.df["Biased"].value_counts()
@@ -22,7 +21,7 @@ class Investigator:
 
         return self
     # ----------------------------------------------------------------------
-
+    # Using a helper function to find the average for each table by adding a column named LEN
     def average_length(self):
         
         def get_average(df:pd.DataFrame):
@@ -42,7 +41,7 @@ class Investigator:
 
         return self
     # ----------------------------------------------------------------------
-
+    # Finding the words by concatenating them into one large array and turning it into a series of pandas
     def common_words(self):
         words = []
         for i in self.df["Text"].values:
@@ -53,9 +52,9 @@ class Investigator:
         self.results["common_words"]["total"] = [i for i in words.keys()]
         return self
     # ----------------------------------------------------------------------
-
+    # Using a helper function to find the longest by a new column
     def longest_3_tweets(self):
-
+ 
         def get_3_longest(df:pd.DataFrame):
             df["len"] = df["Text"].apply(lambda x : len(str(x)))
             
@@ -76,7 +75,7 @@ class Investigator:
 
         return self
     # ----------------------------------------------------------------------
-
+    # Using a helper function to find words with all capital letters, and a helper function that adds a column that counts those words
     def uppercase_words(self):
         def is_uppercase(word:str):
             for i in word:
