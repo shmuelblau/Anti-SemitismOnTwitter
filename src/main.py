@@ -1,6 +1,9 @@
 import sys
-from Manager import Manager
+import os
+from classes.Manager import Manager
 
+CSV_PATH = os.getenv("CSV_PATH" ,"C://Users//user//Desktop//DATA//Projects//Anti-SemitismOnTwitter//results//cleaned_dataset_tweets.csv")
+JSON_PATH = os.getenv("JSON_PATH" ,"C://Users//user//Desktop//DATA//Projects//Anti-SemitismOnTwitter//results//results.json")
 
 def start():
 
@@ -17,11 +20,11 @@ def start():
     
 
     df = Manager.load(path)
-    results = Manager.DataExploration(df)
-    cleaned_dataset_tweets = Manager.DataCleaning(df)
+    results = Manager.DataInvestigation(df)
+    cleaned_dataset_tweets = Manager.DataCleaning(df) 
 
-    Manager.SaveJson(results)
-    Manager.SaveToCsv(cleaned_dataset_tweets)
+    Manager.SaveJson(results ,JSON_PATH)
+    Manager.SaveToCsv(cleaned_dataset_tweets , CSV_PATH)
 
     print("Data saved successfully")
 
