@@ -5,13 +5,18 @@ from classes.Manager import Manager
 CSV_PATH = os.getenv("CSV_PATH" ,"..//results//cleaned_dataset_tweets.csv")
 JSON_PATH = os.getenv("JSON_PATH" ,"..//results//results.json")
 
+# Loading a file path or default path
+if len(sys.argv) > 1:
+    PATH = sys.argv[1]
+else:
+    PATH = "..//data//tweets_dataset.csv"
+
+
+
+
 def start():
 
-    # Loading a file path or default path
-    if len(sys.argv) > 1:
-        path = sys.argv[1]
-    else:
-        path = "..//data//tweets_dataset.csv"
+    
 
     # Checking if the path is valid
     if Manager.tryLoad == -1 :
@@ -21,7 +26,7 @@ def start():
 
     
     # Running the actions through the manager
-    df = Manager.load(path)
+    df = Manager.load(PATH)
     results = Manager.DataInvestigation(df)
     cleaned_dataset_tweets = Manager.DataCleaning(df) 
 
